@@ -1,5 +1,4 @@
 // client/src/pages/EditProductPage.jsx
-
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
@@ -57,15 +56,27 @@ export default function EditProductPage() {
         }
     };
 
+    if (loading && !product) {
+        return <LoadingSpinner />;
+    }
+
     if (error && !product) {
         return (
-            <div className="bg-white h-screen flex items-center justify-center">
-                <div className="text-center">
-                    <p className="text-red-500 font-semibold">{error}</p>
+            <div className="min-h-[calc(100vh-4rem)] bg-gradient-to-br from-pink-50 via-rose-100 to-purple-100 flex items-center justify-center">
+                <div className="bg-white/90 rounded-2xl shadow-xl px-8 py-10 text-center">
+                    <p className="text-rose-500 font-semibold">{error}</p>
                 </div>
             </div>
         );
     }
 
-    return <CreateEditProductForm product={product} onSubmit={handleSubmit} isLoading={loading} />;
+    return (
+        <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-100 to-purple-100 px-4 py-12">
+            <div className="w-full max-w-3xl mx-auto bg-white/90 rounded-3xl shadow-2xl p-6 sm:p-8 mb-10">
+                <h1 className="text-2xl font-bold text-pink-700 mb-4">Edit Product</h1>
+                <CreateEditProductForm product={product} onSubmit={handleSubmit} isLoading={loading} />
+            </div>
+        </div>
+    );
+
 }
